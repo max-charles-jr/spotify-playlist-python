@@ -23,21 +23,30 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope=SCOPE
 ))
 
-# Search for tracks to append to the existing playlist.
-songs_to_find = [
-    "Rochelle Jordan Crave (Club Mix)",
-    "Lucky Daye Nowhere Fast",
-    "Jhene Aiko So Good (feat. Kendrick Lamar)",
-    "Momo Boyd Oops",
-    "Tone Stith Pageant Stage",
-    "Kenyon Dixon Talk You Through It",
-    "Chris Brown track:Obvious"    
-]
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def read_song_list(filename):
+    """Read search strings from a text file next to this script.
+
+    One search string per line. Blank lines and lines starting with # are ignored.
+    A missing file is treated as an empty list.
+    """
+    path = os.path.join(SCRIPT_DIR, filename)
+    if not os.path.exists(path):
+        print(f"{filename} not found; treating it as empty.")
+        return []
+    with open(path, encoding="utf-8") as f:
+        lines = (line.strip() for line in f)
+        return [line for line in lines if line and not line.startswith("#")]
+
+
+# Search strings for tracks to append to the existing playlist.
+songs_to_find = read_song_list("songs_to_find.txt")
 
 # Search strings for tracks to remove from the playlist (same format as above).
 # Matching is done against the tracks already in the playlist.
-songs_to_remove = [   
-]
+songs_to_remove = read_song_list("songs_to_remove.txt")
 
 # Set True to print what would be removed/added without changing the playlist.
 DRY_RUN = False
