@@ -19,13 +19,18 @@ A small Python script that adds and removes tracks on an existing Spotify playli
 
 ## Usage
 
-Edit the settings at the top of [create_playlist.py](create_playlist.py):
+Edit the song lists in the text files next to the script. Put one search string per line. Blank lines and lines starting with `#` are ignored.
+
+| File | Purpose |
+| --- | --- |
+| `songs_to_find.txt` | Search strings for tracks to add |
+| `songs_to_remove.txt` | Search strings for tracks to remove |
+
+Two settings stay at the top of [create_playlist.py](create_playlist.py):
 
 | Setting | Purpose |
 | --- | --- |
 | `PLAYLIST_ID` | ID of the playlist to update (the part of the playlist URL after `/playlist/`) |
-| `songs_to_find` | Search strings for tracks to add |
-| `songs_to_remove` | Search strings for tracks to remove |
 | `DRY_RUN` | `True` prints the planned changes without modifying the playlist |
 
 Then run:
